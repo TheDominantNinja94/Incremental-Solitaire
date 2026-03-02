@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+.card-overlap {
+  top: calc(var(--index) * 1.25rem);
+}
+.card-overlap-compact {
+  top: calc(var(--index) * 0.75rem);
+}
+.card-overlap-ultra {
+  top: calc(var(--index) * 0.5rem);
+}
+.card-overlap-micro {
+  top: calc(var(--index) * 0.35rem);
+}
+.card-overlap-nano {
+  top: calc(var(--index) * 0.25rem);
+}
+@media (min-width: 640px) {
+  .card-overlap {
+    top: calc(var(--index) * 1.75rem);
+  }
+  .card-overlap-compact {
+    top: calc(var(--index) * 1.0rem);
+  }
+  .card-overlap-ultra {
+    top: calc(var(--index) * 0.75rem);
+  }
+  .card-overlap-micro {
+    top: calc(var(--index) * 0.5rem);
+  }
+  .card-overlap-nano {
+    top: calc(var(--index) * 0.35rem);
+  }
+}
+@media (min-width: 768px) {
+  .card-overlap {
+    top: calc(var(--index) * 2.25rem);
+  }
+  .card-overlap-compact {
+    top: calc(var(--index) * 1.25rem);
+  }
+  .card-overlap-ultra {
+    top: calc(var(--index) * 1.0rem);
+  }
+  .card-overlap-micro {
+    top: calc(var(--index) * 0.75rem);
+  }
+  .card-overlap-nano {
+    top: calc(var(--index) * 0.5rem);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}

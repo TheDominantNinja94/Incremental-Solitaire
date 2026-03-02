@@ -1,0 +1,5 @@
+{
+  "name": "Parody Solitaire Base",
+  "description": "A traditional game of Klondike Solitaire, serving as a base for a parody.",
+  "requestFramePermissions": []
+}
