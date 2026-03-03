@@ -437,22 +437,66 @@ const EmptyPile = ({ onClick, label, isHintSource, isHintDest, compact, ultraCom
   );
 };
 
+// --- Local Storage Hook ---
+function useLocalStorage<T>(key: string, initialValue: T) {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.error(error);
+      return initialValue;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(storedValue));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [key, storedValue]);
+
+  return [storedValue, setStoredValue] as const;
+}
+
 // --- Main App ---
 
 export default function App() {
-  const [globalHardMode, setGlobalHardMode] = useState(false);
-  const [guaranteedWinnable, setGuaranteedWinnable] = useState(false);
-  const [gameStates, setGameStates] = useState<GameState[]>([dealGame(globalHardMode, guaranteedWinnable)]);
+  const [globalHardMode, setGlobalHardMode] = useLocalStorage('solitaire_globalHardMode', false);
+  const [guaranteedWinnable, setGuaranteedWinnable] = useLocalStorage('solitaire_guaranteedWinnable', false);
+  
+  // Initialize gameStates conditionally based on localStorage
+  const [gameStates, setGameStates] = useState<GameState[]>(() => {
+    try {
+      const item = window.localStorage.getItem('solitaire_gameStates');
+      if (item) {
+        return JSON.parse(item);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return [dealGame(globalHardMode, guaranteedWinnable)];
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('solitaire_gameStates', JSON.stringify(gameStates));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [gameStates]);
+
   const [selection, setSelection] = useState<Selection | null>(null);
   const [isPaused, setIsPaused] = useState(false);
-  const [performanceMode, setPerformanceMode] = useState(false);
+  const [performanceMode, setPerformanceMode] = useLocalStorage('solitaire_performanceMode', false);
   const [showUpgradesMobile, setShowUpgradesMobile] = useState(false);
   const [activeTab, setActiveTab] = useState<UpgradeCategory>('core');
   
-  const [wins, setWins] = useState(0);
-  const [gears, setGears] = useState(0);
-  const [prestige, setPrestige] = useState(0);
-  const [upgrades, setUpgrades] = useState<Record<string, number>>({});
+  const [wins, setWins] = useLocalStorage('solitaire_wins', 0);
+  const [gears, setGears] = useLocalStorage('solitaire_gears', 0);
+  const [prestige, setPrestige] = useLocalStorage('solitaire_prestige', 0);
+  const [upgrades, setUpgrades] = useLocalStorage<Record<string, number>>('solitaire_upgrades', {});
 
   // Multi-Game Sync
   useEffect(() => {

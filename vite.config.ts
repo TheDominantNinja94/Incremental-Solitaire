@@ -12,7 +12,7 @@ export default defineConfig(({mode}) => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['icon.svg', 'pwa-192x192.png'],
+        includeAssets: ['icon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
         manifest: {
           name: 'Solitaire',
           short_name: 'Solitaire',
@@ -27,19 +27,14 @@ export default defineConfig(({mode}) => {
               type: 'image/png'
             },
             {
-              src: 'icon.svg',
-              sizes: '192x192',
-              type: 'image/svg+xml'
+              src: 'pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png'
             },
             {
-              src: 'icon.svg',
+              src: 'pwa-512x512.png',
               sizes: '512x512',
-              type: 'image/svg+xml'
-            },
-            {
-              src: 'icon.svg',
-              sizes: '512x512',
-              type: 'image/svg+xml',
+              type: 'image/png',
               purpose: 'any maskable'
             }
           ]
